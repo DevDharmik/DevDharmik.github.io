@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dharmik Champaneri — Data Scientist</title>
+<meta name="description" content="Dharmik Champaneri — Data Scientist & ML Engineer based in Berlin. Portfolio of predictive modeling, anomaly detection, and analytics projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E11;
+    --panel:#12161B;
+    --panel-2:#161B21;
+    --line:#212A30;
+    --text:#E8ECEF;
+    --muted:#8A96A0;
+    --muted-2:#5C6870;
+    --teal:#00D9C0;
+    --amber:#FFB347;
+    --red:#FF5A5F;
+    --radius:2px;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Space Grotesk',sans-serif;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+
+  ::selection{background:var(--teal); color:#0B0E11;}
+  :focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,14,17,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .nav-mark{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600; font-size:14px; letter-spacing:0.02em;
+    color:var(--text);
+    display:flex; align-items:center; gap:8px;
+  }
+  .nav-mark .dot{width:8px; height:8px; border-radius:50%; background:var(--teal); box-shadow:0 0 8px var(--teal); flex-shrink:0;}
+  .nav-links{display:flex; gap:32px; font-size:13px;}
+  .nav-links a{
+    color:var(--muted); font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.03em; transition:color 0.2s;
+    position:relative;
+  }
+  .nav-links a:hover{color:var(--teal);}
+  .nav-links .idx{color:var(--muted-2); margin-right:6px;}
+  @media (max-width:720px){ .nav-links{display:none;} }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding:88px 0 0 0;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-top{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:32px;
+    align-items:start;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--teal); margin-bottom:20px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:24px; height:1px; background:var(--teal);}
+  h1.name{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(40px, 7vw, 76px);
+    line-height:1.02;
+    letter-spacing:-0.02em;
+    color:var(--text);
+  }
+  .role-line{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(18px,2.4vw,24px);
+    color:var(--muted);
+    margin-top:14px;
+    font-weight:500;
+  }
+  .role-line .accent{color:var(--amber);}
+  .hero-card{
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:18px 20px;
+    min-width:220px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+  }
+  .hero-card-row{
+    display:flex; justify-content:space-between; gap:20px;
+    padding:7px 0;
+    border-bottom:1px solid var(--line);
+    color:var(--muted);
+  }
+  .hero-card-row:last-child{border-bottom:none;}
+  .hero-card-row span:last-child{color:var(--text); text-align:right;}
+
+  .hero-lede{
+    max-width:640px;
+    margin-top:32px;
+    color:var(--muted);
+    font-size:16px;
+  }
+  .hero-cta{
+    display:flex; gap:14px; margin-top:36px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px; letter-spacing:0.03em;
+    padding:13px 22px;
+    border:1px solid var(--teal);
+    color:var(--teal);
+    transition:background 0.2s, color 0.2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn:hover{background:var(--teal); color:#0B0E11;}
+  .btn.ghost{border-color:var(--line); color:var(--muted);}
+  .btn.ghost:hover{border-color:var(--muted); color:var(--text); background:transparent;}
+
+  /* ---------- TICKER (signature element) ---------- */
+  .ticker-outer{
+    border-top:1px solid var(--line);
+    margin-top:56px;
+    background:var(--panel);
+    overflow:hidden;
+    position:relative;
+  }
+  .ticker-outer::before, .ticker-outer::after{
+    content:''; position:absolute; top:0; bottom:0; width:60px; z-index:2; pointer-events:none;
+  }
+  .ticker-outer::before{ left:0; background:linear-gradient(90deg, var(--panel), transparent); }
+  .ticker-outer::after{ right:0; background:linear-gradient(270deg, var(--panel), transparent); }
+  .ticker-track{
+    display:flex; gap:0; white-space:nowrap;
+    animation:scroll-left 38s linear infinite;
+    width:max-content;
+  }
+  @keyframes scroll-left{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .ticker-item{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    padding:13px 28px;
+    border-right:1px solid var(--line);
+    color:var(--muted);
+    display:flex; align-items:center; gap:8px;
+  }
+  .ticker-item b{color:var(--teal); font-weight:600;}
+  .ticker-item .lbl{color:var(--muted-2);}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:96px 0;}
+  section.tight{padding:72px 0;}
+  .sec-head{
+    display:flex; align-items:baseline; gap:16px; margin-bottom:48px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:20px;
+  }
+  .sec-num{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--muted-2); font-size:13px;
+  }
+  .sec-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(24px,3vw,32px);
+    font-weight:600;
+  }
+  .sec-sub{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--muted); font-size:12px; margin-left:auto; text-align:right;
+  }
+
+  /* ABOUT */
+  .about-grid{
+    display:grid; grid-template-columns:1.4fr 1fr; gap:56px;
+  }
+  @media (max-width:800px){ .about-grid{grid-template-columns:1fr;} }
+  .about-grid p{color:var(--muted); font-size:15.5px; margin-bottom:18px; max-width:56ch;}
+  .about-grid strong{color:var(--text); font-weight:600;}
+  .fact-list{border:1px solid var(--line);}
+  .fact-row{
+    display:flex; justify-content:space-between; padding:14px 18px;
+    border-bottom:1px solid var(--line);
+    font-size:13px;
+  }
+  .fact-row:last-child{border-bottom:none;}
+  .fact-row .k{font-family:'JetBrains Mono',monospace; color:var(--muted-2);}
+  .fact-row .v{color:var(--text); text-align:right; font-weight:500;}
+
+  /* PROJECTS */
+  .proj-list{display:flex; flex-direction:column; gap:1px; background:var(--line);}
+  .proj{
+    background:var(--bg);
+    padding:32px;
+    display:grid;
+    grid-template-columns:56px 1.3fr 1fr;
+    gap:28px;
+    transition:background 0.25s;
+  }
+  .proj:hover{background:var(--panel-2);}
+  @media (max-width:900px){ .proj{grid-template-columns:1fr; gap:16px;} }
+  .proj-idx{
+    font-family:'JetBrains Mono',monospace; color:var(--muted-2); font-size:13px;
+  }
+  .proj-title{
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:20px; margin-bottom:8px;
+  }
+  .proj-tag{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10.5px;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--amber);
+    border:1px solid rgba(255,179,71,0.3); padding:3px 8px; margin-bottom:12px;
+  }
+  .proj-desc{color:var(--muted); font-size:14.5px; margin-bottom:14px;}
+  .proj-stack{
+    display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px;
+  }
+  .proj-stack span{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted-2);
+    border:1px solid var(--line); padding:3px 8px;
+  }
+  .proj-link{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--teal);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .proj-link:hover{text-decoration:underline;}
+  .metrics{
+    border-left:1px solid var(--line);
+    padding-left:24px;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  @media (max-width:900px){ .metrics{border-left:none; padding-left:0; border-top:1px solid var(--line); padding-top:16px;} }
+  .metric-row{display:flex; justify-content:space-between; gap:12px; font-family:'JetBrains Mono',monospace; font-size:12.5px;}
+  .metric-row .m-label{color:var(--muted-2);}
+  .metric-row .m-val{color:var(--teal); font-weight:600;}
+
+  /* SKILLS */
+  .skill-groups{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);}
+  @media (max-width:800px){ .skill-groups{grid-template-columns:1fr;} }
+  .skill-group{background:var(--bg); padding:28px;}
+  .skill-group h3{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--amber); margin-bottom:16px;
+  }
+  .skill-group ul{list-style:none;}
+  .skill-group li{
+    color:var(--muted); font-size:14px; padding:6px 0; border-bottom:1px solid var(--line);
+  }
+  .skill-group li:last-child{border-bottom:none;}
+
+  /* TIMELINE */
+  .timeline{border-left:1px solid var(--line); margin-left:8px;}
+  .tl-item{position:relative; padding:0 0 40px 32px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:''; position:absolute; left:-5px; top:4px; width:9px; height:9px;
+    background:var(--bg); border:2px solid var(--teal); border-radius:50%;
+  }
+  .tl-date{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted-2); margin-bottom:6px;}
+  .tl-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; margin-bottom:6px;}
+  .tl-desc{color:var(--muted); font-size:14px; max-width:60ch;}
+
+  /* CONTACT */
+  .contact-panel{
+    border:1px solid var(--line); background:var(--panel);
+    padding:56px 40px; text-align:center;
+  }
+  .contact-panel h2{
+    font-family:'Space Grotesk',sans-serif; font-size:clamp(26px,4vw,40px); margin-bottom:16px;
+  }
+  .contact-panel p{color:var(--muted); max-width:50ch; margin:0 auto 32px;}
+  .contact-links{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+
+  footer{
+    border-top:1px solid var(--line); padding:32px 0;
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted-2);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="nav-mark"><span class="dot"></span>D.CHAMPANERI</a>
+    <div class="nav-links">
+      <a href="#about"><span class="idx">01</span>About</a>
+      <a href="#projects"><span class="idx">02</span>Projects</a>
+      <a href="#skills"><span class="idx">03</span>Skills</a>
+      <a href="#experience"><span class="idx">04</span>Experience</a>
+      <a href="#contact"><span class="idx">05</span>Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-top">
+      <div>
+        <div class="eyebrow">Data Scientist · Berlin, DE</div>
+        <h1 class="name">Dharmik<br>Champaneri</h1>
+        <div class="role-line">M.Sc. Data Science candidate — building models that hold up <span class="accent">under real conditions</span>, not just on the leaderboard.</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-row"><span>STATUS</span><span>Open to Werkstudent roles</span></div>
+        <div class="hero-card-row"><span>BASE</span><span>Berlin, Germany</span></div>
+        <div class="hero-card-row"><span>FOCUS</span><span>ML / Analytics / BI</span></div>
+        <div class="hero-card-row"><span>STACK</span><span>Python · SQL · sklearn</span></div>
+      </div>
+    </div>
+    <p class="hero-lede">I work at the intersection of predictive modeling and applied analytics — from constructor performance forecasting in Formula 1 to anomaly detection in smart-building IoT streams. Currently completing my M.Sc. at the University of Europe for Applied Sciences, Potsdam.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn">View projects →</a>
+      <a href="https://github.com/DevDharmik" class="btn ghost" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="#contact" class="btn ghost">Get in touch</a>
+    </div>
+  </div>
+
+  <div class="ticker-outer">
+    <div class="ticker-track" id="tickerTrack"><!-- filled by JS --></div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num mono">01</span>
+      <span class="sec-title display">About</span>
+      <span class="sec-sub">background &amp; context</span>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a data science graduate student based in Berlin, currently completing my <strong>M.Sc. in Data Science at the University of Europe for Applied Sciences (Potsdam)</strong>, supervised by Dr. Humera Noor Minhas. My work centers on turning messy, real-world data — race telemetry, IoT sensor streams, social text — into models people can actually act on.</p>
+        <p>My capstone, <strong>PitWall Intelligence</strong>, predicts Formula 1 constructor performance and sponsorship value from two decades of race data, validated to a test R² of 0.976. In parallel, I've worked on anomaly detection for smart buildings, sentiment analysis at scale, and applied ETL/dashboard projects.</p>
+        <p>Before this, I completed a <strong>B.E. in Computer Engineering (Honours in Data Science)</strong> at the University of Mumbai, alongside the McKinsey Forward Program and case simulations with Accenture, BCG X, and Tata. I'm now looking for a Werkstudent role in data or analytics to build alongside my degree.</p>
+      </div>
+      <div class="fact-list mono">
+        <div class="fact-row"><span class="k">LOCATION</span><span class="v">Berlin, Germany</span></div>
+        <div class="fact-row"><span class="k">DEGREE</span><span class="v">M.Sc. Data Science (in progress)</span></div>
+        <div class="fact-row"><span class="k">INSTITUTION</span><span class="v">UEAS, Potsdam</span></div>
+        <div class="fact-row"><span class="k">PRIOR DEGREE</span><span class="v">B.E. Computer Eng. (Hons. Data Science)</span></div>
+        <div class="fact-row"><span class="k">LANGUAGES</span><span class="v">English (fluent), German (A1)</span></div>
+        <div class="fact-row"><span class="k">INTERESTS</span><span class="v">Formula 1, cricket, design</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" style="background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num mono">02</span>
+      <span class="sec-title display">Projects</span>
+      <span class="sec-sub">selected work</span>
+    </div>
+
+    <div class="proj-list">
+
+      <div class="proj">
+        <div class="proj-idx">P.01</div>
+        <div>
+          <span class="proj-tag">Capstone</span>
+          <div class="proj-title">PitWall Intelligence</div>
+          <p class="proj-desc">Predictive modeling of Formula 1 constructor performance and sponsorship value across the 2014–2025 V6 hybrid era, using 112 team-seasons of race data from the Jolpica-F1 API. Includes a gradient-boosted points predictor, a podium-probability classifier, SHAP-based interpretability, and a custom two-dimensional Brand Value Index.</p>
+          <div class="proj-stack">
+            <span>Python</span><span>Scikit-learn</span><span>SHAP</span><span>Streamlit</span><span>SQLite</span><span>Plotly</span>
+          </div>
+          <a class="proj-link" href="https://github.com/DevDharmik/Pitwall-intelligence" target="_blank" rel="noopener">github.com/DevDharmik/Pitwall-intelligence ↗</a>
+        </div>
+        <div class="metrics">
+          <div class="metric-row"><span class="m-label">Points model — test R²</span><span class="m-val">0.976</span></div>
+          <div class="metric-row"><span class="m-label">Points model — RMSE</span><span class="m-val">38.7</span></div>
+          <div class="metric-row"><span class="m-label">Podium classifier AUC-ROC</span><span class="m-val">0.928</span></div>
+          <div class="metric-row"><span class="m-label">BVI vs. championship rank (ρ)</span><span class="m-val">0.72</span></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-idx">P.02</div>
+        <div>
+          <span class="proj-tag">Group Project</span>
+          <div class="proj-title">Smart Building Anomaly Detection</div>
+          <p class="proj-desc">Multi-model anomaly detection pipeline for building energy and IoT sensor data, combining the ASHRAE Great Energy Predictor III dataset (565 buildings, ~4.9M rows) with a live 2024 Sharjah IoT stream. Uses statistical baselines, Isolation Forest, and an LSTM autoencoder, with an LLM layer for anomaly explanation.</p>
+          <div class="proj-stack">
+            <span>Python</span><span>TensorFlow/Keras</span><span>Scikit-learn</span><span>SHAP</span><span>Streamlit</span><span>Groq LLM</span>
+          </div>
+          <a class="proj-link" href="https://github.com/DevDharmik/Smart-Building-Anomaly-Detection" target="_blank" rel="noopener">github.com/DevDharmik/Smart-Building-Anomaly-Detection ↗</a>
+        </div>
+        <div class="metrics">
+          <div class="metric-row"><span class="m-label">Buildings covered</span><span class="m-val">565</span></div>
+          <div class="metric-row"><span class="m-label">Records processed</span><span class="m-val">~4.9M</span></div>
+          <div class="metric-row"><span class="m-label">Detection methods</span><span class="m-val">4 (consensus)</span></div>
+          <div class="metric-row"><span class="m-label">Sensor streams (Sharjah)</span><span class="m-val">4</span></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-idx">P.03</div>
+        <div>
+          <span class="proj-tag">NLP</span>
+          <div class="proj-title">YouTube Comment Sentiment Analysis</div>
+          <p class="proj-desc">Sentiment classification pipeline for YouTube comments, rebuilt and extended from earlier undergraduate research. Compares classical ML baselines against a transformer model, deployed as a live tool that classifies sentiment from real YouTube URLs rather than static samples.</p>
+          <div class="proj-stack">
+            <span>Python</span><span>Scikit-learn</span><span>HuggingFace</span><span>RoBERTa</span><span>Streamlit</span>
+          </div>
+          <a class="proj-link" href="https://github.com/DevDharmik/Sentiment_Analysis" target="_blank" rel="noopener">github.com/DevDharmik/Sentiment_Analysis ↗</a>
+        </div>
+        <div class="metrics">
+          <div class="metric-row"><span class="m-label">Best classical model</span><span class="m-val">Linear SVM + TF-IDF</span></div>
+          <div class="metric-row"><span class="m-label">Accuracy (Pang &amp; Lee corpus)</span><span class="m-val">~91%</span></div>
+          <div class="metric-row"><span class="m-label">Transformer baseline</span><span class="m-val">RoBERTa (Twitter)</span></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-idx">P.04</div>
+        <div>
+          <span class="proj-tag">Data Engineering</span>
+          <div class="proj-title">Spotify ETL Pipeline</div>
+          <p class="proj-desc">An end-to-end ETL pipeline that extracts listening and track data via the Spotify API, transforms it into an analysis-ready schema, and loads it for downstream querying and visualization.</p>
+          <div class="proj-stack">
+            <span>Python</span><span>Spotify API</span><span>Pandas</span><span>SQL</span>
+          </div>
+          <a class="proj-link" href="https://github.com/DevDharmik" target="_blank" rel="noopener">View on GitHub ↗</a>
+        </div>
+        <div class="metrics">
+          <div class="metric-row"><span class="m-label">Pipeline stages</span><span class="m-val">Extract → Transform → Load</span></div>
+          <div class="metric-row"><span class="m-label">Source</span><span class="m-val">Spotify Web API</span></div>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-idx">P.05</div>
+        <div>
+          <span class="proj-tag">Analytics</span>
+          <div class="proj-title">World Bank Development Dashboard</div>
+          <p class="proj-desc">An interactive dashboard exploring global development indicators from World Bank Open Data — built to make cross-country comparisons across economic and social metrics accessible at a glance.</p>
+          <div class="proj-stack">
+            <span>Python</span><span>Pandas</span><span>Plotly / Dash</span>
+          </div>
+          <a class="proj-link" href="https://github.com/DevDharmik" target="_blank" rel="noopener">View on GitHub ↗</a>
+        </div>
+        <div class="metrics">
+          <div class="metric-row"><span class="m-label">Data source</span><span class="m-val">World Bank Open Data</span></div>
+          <div class="metric-row"><span class="m-label">Output</span><span class="m-val">Interactive dashboard</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num mono">03</span>
+      <span class="sec-title display">Skills</span>
+      <span class="sec-sub">tools &amp; methods</span>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Languages &amp; Core</h3>
+        <ul>
+          <li>Python</li>
+          <li>SQL</li>
+          <li>Pandas / NumPy</li>
+          <li>Git / GitHub</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Modeling &amp; ML</h3>
+        <ul>
+          <li>Scikit-learn</li>
+          <li>TensorFlow / Keras</li>
+          <li>SHAP (interpretability)</li>
+          <li>HuggingFace Transformers</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Visualization &amp; Delivery</h3>
+        <ul>
+          <li>Streamlit</li>
+          <li>Plotly / Matplotlib / Seaborn</li>
+          <li>Power BI basics</li>
+          <li>SQLite</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" style="background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-num mono">04</span>
+      <span class="sec-title display">Experience &amp; Education</span>
+      <span class="sec-sub">timeline</span>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date mono">2025 — PRESENT</div>
+        <div class="tl-title">M.Sc. Data Science — University of Europe for Applied Sciences, Potsdam</div>
+        <div class="tl-desc">Capstone: predictive modeling of F1 constructor performance and sponsorship value (PitWall Intelligence). Group coursework in applied research methods and IoT anomaly detection.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date mono">2026 — PRESENT</div>
+        <div class="tl-title">Bicycle Delivery Courier — Closer Go GmbH, Berlin</div>
+        <div class="tl-desc">Part-time work alongside my degree — logistics, route planning, and time management under real operational constraints.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date mono">2020 — 2024</div>
+        <div class="tl-title">B.E. Computer Engineering (Honours in Data Science) — University of Mumbai</div>
+        <div class="tl-desc">CGPA 7.75/10. Co-authored undergraduate research on YouTube comment sentiment analysis. Completed the McKinsey Forward Program and case simulations with Accenture, BCG X, and Tata.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-panel">
+      <h2 class="display">Let's talk data.</h2>
+      <p>I'm actively looking for a Werkstudent role in data science, analytics, or BI in Berlin. If you're hiring — or just want to talk about F1 telemetry — reach out.</p>
+      <div class="contact-links">
+        <a class="btn" href="mailto:your.email@example.com">Email me →</a>
+        <a class="btn ghost" href="https://github.com/DevDharmik" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn ghost" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+    <span>© 2026 Dharmik Champaneri</span>
+    <span>Built with real numbers, no filler.</span>
+  </div>
+</footer>
+
+<script>
+  const tickerData = [
+    { label: "PitWall · Test R²", value: "0.976" },
+    { label: "PitWall · Podium AUC-ROC", value: "0.928" },
+    { label: "PitWall · BVI Spearman ρ", value: "0.72" },
+    { label: "Smart Building · Buildings analyzed", value: "565" },
+    { label: "Smart Building · Records processed", value: "4.9M" },
+    { label: "Sentiment · SVM accuracy", value: "91%" },
+    { label: "Status · Werkstudent search", value: "OPEN" },
+    { label: "Base", value: "Berlin, DE" },
+  ];
+  const track = document.getElementById('tickerTrack');
+  function buildTicker(){
+    let html = '';
+    tickerData.forEach(d => {
+      html += `<div class="ticker-item"><span class="lbl">${d.label}</span><b>${d.value}</b></div>`;
+    });
+    // duplicate for seamless loop
+    track.innerHTML = html + html;
+  }
+  buildTicker();
+</script>
+
+</body>
+</html>

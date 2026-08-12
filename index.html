@@ -126,6 +126,13 @@
     filter:grayscale(20%) contrast(1.04) brightness(0.96);
     display:block;
   }
+  .photo-fallback{
+    width:100%; height:100%; display:none; align-items:center; justify-content:center;
+    font-family:var(--display); font-size:64px; font-weight:700; color:var(--amber);
+    background:var(--bg-raised);
+  }
+  .photo-frame.broken img{display:none;}
+  .photo-frame.broken .photo-fallback{display:flex;}
   .photo-frame::before, .photo-frame::after,
   .photo-corner-tl, .photo-corner-br{
     content:''; position:absolute; width:16px; height:16px; z-index:2; pointer-events:none;
@@ -280,8 +287,9 @@
       </div>
     </div>
     <div class="hero-photo">
-      <div class="photo-frame">
-        <img src="profile.jpg" alt="Dharmik Champaneri">
+      <div class="photo-frame" id="photo-frame">
+        <img src="profile.jpg" alt="Dharmik Champaneri" onerror="document.getElementById('photo-frame').classList.add('broken')">
+        <div class="photo-fallback" aria-hidden="true">D</div>
       </div>
       <div class="photo-meta">
         <span class="live">● Open to work</span>
@@ -448,7 +456,7 @@
       <div class="edu-cert-col">
         <h4>Certifications &amp; Programs</h4>
         <div class="cert-item"><span>McKinsey Forward Program</span><span class="badge">Complete</span></div>
-        <div class="cert-item"><span>Google Analytics 4 (GA4)</span><span class="badge">Complete</span></div>
+        <div class="cert-item"><span>Google Analytics 4 (GA4)</span><span class="badge">In progress</span></div>
         <div class="cert-item"><span>Forage Job Simulation — BCG X</span><span class="badge">Complete</span></div>
         <div class="cert-item"><span>Forage Job Simulation — Accenture</span><span class="badge">Complete</span></div>
         <div class="cert-item"><span>Forage Job Simulation — Tata Group</span><span class="badge">Complete</span></div>

@@ -1,1 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dharmik Champaneri — Data Analyst, Berlin</title>
+<meta name="description" content="Dharmik Champaneri — Aspiring Data Analyst / BI Analyst in Berlin. M.Sc. Data Science candidate at UE Potsdam. Python, SQL, Power BI, scikit-learn. Projects in F1 analytics, IoT anomaly detection, and NLP.">
+<meta property="og:title" content="Dharmik Champaneri — Data Analyst, Berlin">
+<meta property="og:description" content="Aspiring Data Analyst / BI Analyst. Python · SQL · Power BI · scikit-learn. M.Sc. Data Science @ UE Potsdam.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%2312141a%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f2b134%22 font-family=%22monospace%22>D</text></svg>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12141a;
+    --bg-raised:#191c24;
+    --paper:#f2efe8;
+    --line:rgba(242,239,232,0.10);
+    --line-strong:rgba(242,239,232,0.22);
+    --muted:#9da2b2;
+    --amber:#f2b134;
+    --signal:#3ddc97;
+    --mono:'IBM Plex Mono', monospace;
+    --display:'Space Grotesk', sans-serif;
+    --body:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--paper);
+    font-family:var(--body); overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  #bg-canvas{position:fixed; inset:0; z-index:0; opacity:0.55;}
+  a{color:inherit; text-decoration:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--amber); outline-offset:3px;}
 
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px clamp(20px,5vw,56px);
+    background:rgba(18,20,26,0.72); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-id{font-family:var(--display); font-weight:600; font-size:15px; letter-spacing:0.02em;}
+  .nav-id span{color:var(--muted); font-weight:400;}
+  .nav-links{display:flex; align-items:center; gap:28px; font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;}
+  .nav-links a{color:var(--muted); position:relative; padding-bottom:2px; transition:color .2s;}
+  .nav-links a:hover{color:var(--amber);}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:1px;background:var(--amber);transition:width .25s;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-links .btn-primary{padding:9px 16px;}
+  .nav-toggle{
+    display:none; background:none; border:1px solid var(--line-strong); color:var(--paper);
+    width:38px; height:38px; border-radius:2px; cursor:pointer; position:relative;
+  }
+  .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{
+    content:''; position:absolute; left:9px; width:20px; height:2px; background:var(--paper); transition:.2s;
+  }
+  .nav-toggle span{top:18px;}
+  .nav-toggle span::before{top:-6px;}
+  .nav-toggle span::after{top:6px;}
+  .nav-toggle[aria-expanded="true"] span{background:transparent;}
+  .nav-toggle[aria-expanded="true"] span::before{transform:rotate(45deg); top:0;}
+  .nav-toggle[aria-expanded="true"] span::after{transform:rotate(-45deg); top:0;}
+
+  @media (max-width:820px){
+    .nav-links{
+      display:flex; flex-direction:column; align-items:flex-start; gap:0;
+      position:fixed; top:65px; left:0; right:0; background:var(--bg-raised);
+      border-bottom:1px solid var(--line); padding:8px clamp(20px,5vw,56px) 20px;
+      transform:translateY(-8px); opacity:0; pointer-events:none; transition:.2s;
+    }
+    .nav-links.open{transform:translateY(0); opacity:1; pointer-events:auto;}
+    .nav-links a{padding:14px 0; width:100%; border-bottom:1px solid var(--line);}
+    .nav-links .btn-primary{margin-top:12px; text-align:center;}
+    .nav-toggle{display:block;}
+  }
+
+  main{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 clamp(20px,5vw,56px);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:160px 0 80px; border-bottom:1px solid var(--line);
+    display:grid; grid-template-columns:1fr 240px; gap:56px; align-items:start;
+  }
+  .hero-main{min-width:0;}
+  .hero-eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--signal); display:flex; align-items:center; gap:10px; margin-bottom:28px; flex-wrap:wrap;
+  }
+  .dot{width:6px; height:6px; border-radius:50%; background:var(--signal); box-shadow:0 0 8px var(--signal); animation:pulse 2s infinite; flex-shrink:0;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+  @media (prefers-reduced-motion: reduce){ .dot{animation:none;} }
+  h1{
+    font-family:var(--display); font-weight:700; letter-spacing:-0.02em;
+    font-size:clamp(38px,6.4vw,84px); line-height:0.98; margin:0 0 28px;
+  }
+  h1 .accent{color:var(--amber);}
+  .hero-sub{
+    font-size:clamp(16px,2vw,19px); color:var(--muted); max-width:620px; line-height:1.65; margin:0 0 40px;
+  }
+  .hero-sub strong{color:var(--paper); font-weight:600;}
+  .hero-cta{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:14px 26px; border-radius:2px; transition:all .2s; display:inline-block;
+  }
+  .btn-primary{background:var(--amber); color:#12141a; font-weight:600;}
+  .btn-primary:hover{background:#ffc85c; transform:translateY(-1px);}
+  .btn-ghost{border:1px solid var(--line-strong); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--amber); color:var(--amber);}
+
+  /* ---------- HERO PHOTO ---------- */
+  .hero-photo{position:relative; flex-shrink:0;}
+  .photo-frame{
+    position:relative; width:100%; aspect-ratio:3/4;
+    border:1px solid var(--line-strong); background:var(--bg-raised); overflow:hidden;
+  }
+  .photo-frame img{
+    width:100%; height:100%; object-fit:cover; object-position:top center;
+    filter:grayscale(20%) contrast(1.04) brightness(0.96);
+    display:block;
+  }
+  .photo-fallback{
+    width:100%; height:100%; display:none; align-items:center; justify-content:center;
+    font-family:var(--display); font-size:64px; font-weight:700; color:var(--amber);
+    background:var(--bg-raised);
+  }
+  .photo-frame.broken img{display:none;}
+  .photo-frame.broken .photo-fallback{display:flex;}
+  .photo-frame::before, .photo-frame::after,
+  .photo-corner-tl, .photo-corner-br{
+    content:''; position:absolute; width:16px; height:16px; z-index:2; pointer-events:none;
+  }
+  .photo-frame::before{top:-1px; left:-1px; border-top:2px solid var(--amber); border-left:2px solid var(--amber);}
+  .photo-frame::after{bottom:-1px; right:-1px; border-bottom:2px solid var(--amber); border-right:2px solid var(--amber);}
+  .photo-meta{
+    display:flex; justify-content:space-between; margin-top:12px;
+    font-family:var(--mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted);
+  }
+  .photo-meta .live{color:var(--signal);}
+  @media (max-width:820px){
+    .hero{grid-template-columns:1fr; padding-top:132px;}
+    .hero-photo{width:160px; order:-1; margin-bottom:8px;}
+  }
+
+  /* ---------- TIMING STRIP (signature element) ---------- */
+  .timing-strip{
+    display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--line);
+  }
+  .timing-cell{
+    padding:22px clamp(16px,3vw,28px); border-right:1px solid var(--line);
+    font-family:var(--mono);
+  }
+  .timing-cell:last-child{border-right:none;}
+  .timing-label{font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;}
+  .timing-val{font-size:clamp(18px,2.4vw,26px); font-weight:600; color:var(--paper);}
+  .timing-val .unit{font-size:12px; color:var(--muted); font-weight:400; margin-left:2px;}
+  .timing-val.up{color:var(--signal);}
+  @media (max-width:720px){ .timing-strip{grid-template-columns:repeat(2,1fr);} .timing-cell:nth-child(2){border-right:none;} }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .sec-head{padding:72px 0 8px; display:flex; align-items:baseline; gap:14px;}
+  .sec-tag{font-family:var(--mono); font-size:12px; color:var(--amber); letter-spacing:0.1em;}
+  .sec-title{font-family:var(--display); font-size:clamp(24px,3vw,32px); font-weight:600; margin:0;}
+  .sec-desc{color:var(--muted); max-width:560px; margin:12px 0 40px; line-height:1.6; font-size:15px;}
+
+  /* ---------- WORK GRID ---------- */
+  .work-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:24px;}
+  @media (max-width:800px){ .work-grid{grid-template-columns:1fr;} }
+  .card{background:var(--bg-raised); padding:32px; transition:background .25s;}
+  .card:hover{background:#1e2129;}
+  .card-tag{font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:0.08em;}
+  .card h3{font-family:var(--display); font-size:23px; margin:10px 0 12px; font-weight:600;}
+  .card:hover h3{color:var(--amber);}
+  .card p{color:var(--muted); font-size:14px; line-height:1.6; margin:0 0 14px;}
+  .card p.card-detail{font-size:13px; line-height:1.65; margin:0 0 18px; padding-left:14px; border-left:2px solid var(--line-strong);}
+  .card-stats{display:flex; gap:28px; border-top:1px solid var(--line); padding-top:16px;}
+  .card-stats div{font-family:var(--mono);}
+  .card-stats .k{font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; display:block; margin-bottom:4px;}
+  .card-stats .v{font-size:17px; font-weight:600; color:var(--signal);}
+  .card-links{margin-top:20px; padding-top:16px; border-top:1px solid var(--line); font-family:var(--mono); font-size:12px; display:flex; gap:20px;}
+  .card-links a{color:var(--muted); border-bottom:1px solid var(--line-strong);}
+  .card-links a:hover{color:var(--amber); border-color:var(--amber);}
+
+  /* ---------- STACK / SKILLS ---------- */
+  .stack{display:grid; grid-template-columns:repeat(3,1fr); gap:36px; margin-bottom:96px;}
+  @media (max-width:720px){ .stack{grid-template-columns:1fr;} }
+  .stack-col h4{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 18px; padding-bottom:10px; border-bottom:1px solid var(--line-strong);
+  }
+  .stack-col ul{list-style:none; margin:0; padding:0;}
+  .stack-col li{
+    font-family:var(--mono); font-size:14px; padding:9px 0; border-bottom:1px solid var(--line);
+    display:flex; justify-content:space-between; color:var(--paper);
+  }
+  .stack-col li span{color:var(--muted); font-size:12px;}
+
+  /* ---------- EXPERIENCE / EDUCATION ---------- */
+  .exp-card{
+    background:var(--bg-raised); border:1px solid var(--line); padding:32px; margin-bottom:24px;
+    display:grid; grid-template-columns:180px 1fr; gap:28px;
+  }
+  @media (max-width:720px){ .exp-card{grid-template-columns:1fr; gap:12px;} }
+  .exp-when{font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:0.04em;}
+  .exp-when .status{display:inline-flex; align-items:center; gap:6px; color:var(--signal); margin-top:8px; font-size:11px; text-transform:uppercase; letter-spacing:0.08em;}
+  .exp-body h3{font-family:var(--display); font-size:19px; margin:0 0 4px; font-weight:600;}
+  .exp-body .exp-org{font-family:var(--mono); font-size:12px; color:var(--amber); margin-bottom:14px;}
+  .exp-body ul{margin:0; padding-left:18px; color:var(--muted); font-size:14px; line-height:1.7;}
+  .exp-body ul li::marker{color:var(--line-strong);}
+
+  .edu-cert-grid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:24px; margin-bottom:96px;}
+  @media (max-width:800px){ .edu-cert-grid{grid-template-columns:1fr;} }
+  .edu-cert-col{background:var(--bg-raised); padding:32px;}
+  .edu-cert-col h4{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 20px; padding-bottom:10px; border-bottom:1px solid var(--line-strong);
+  }
+  .edu-item{margin-bottom:20px;}
+  .edu-item:last-child{margin-bottom:0;}
+  .edu-item .deg{font-family:var(--display); font-size:16px; font-weight:600; margin-bottom:3px;}
+  .edu-item .inst{font-family:var(--mono); font-size:12px; color:var(--muted);}
+  .cert-item{
+    display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+    padding:11px 0; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .cert-item:last-child{border-bottom:none;}
+  .cert-item .badge{
+    font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--signal);
+    white-space:nowrap;
+  }
+
+  /* ---------- ABOUT STRIP ---------- */
+  .about{padding:56px 0 96px; border-top:1px solid var(--line); display:grid; grid-template-columns:1fr 1fr; gap:56px;}
+  @media (max-width:800px){ .about{grid-template-columns:1fr; gap:32px;} }
+  .about p{color:var(--muted); line-height:1.75; font-size:15px; margin:0 0 16px;}
+  .about strong{color:var(--paper);}
+  .about .aside{font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:20px;}
+
+  /* ---------- CONTACT ---------- */
+  footer{border-top:1px solid var(--line); padding:80px 0 48px;}
+  footer h2{font-family:var(--display); font-size:clamp(32px,5vw,52px); font-weight:700; margin:0 0 32px; letter-spacing:-0.02em;}
+  .contact-links{display:flex; gap:36px; flex-wrap:wrap; font-family:var(--mono); font-size:13px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:56px;}
+  .contact-links a{padding-bottom:4px; border-bottom:1px solid var(--line-strong); transition:.2s;}
+  .contact-links a:hover{color:var(--amber); border-color:var(--amber);}
+  .foot-meta{font-family:var(--mono); font-size:11px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<nav>
+  <div class="nav-id">DHARMIK CHAMPANERI <span>/ Berlin, DE</span></div>
+  <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation menu"><span></span></button>
+  <div class="nav-links" id="nav-links">
+    <a href="#work">Work</a>
+    <a href="#stack">Stack</a>
+    <a href="#experience">Experience</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+  <section class="hero" id="top">
+    <div class="hero-main">
+      <div class="hero-eyebrow"><span class="dot"></span> M.SC. DATA SCIENCE — UNIVERSITY OF EUROPE FOR APPLIED SCIENCES, POTSDAM · OPEN TO DATA ANALYST &amp; WORKING STUDENT ROLES</div>
+      <h1>Data that has to<br>survive <span class="accent">the real world.</span></h1>
+      <p class="hero-sub">
+        I'm Dharmik — an aspiring Data Analyst / BI Analyst who treats a dashboard the way a race
+        engineer treats a stint plan: <strong>it only counts if it holds up under real conditions</strong>,
+        in front of a stakeholder, not just on a clean test set. I build the pipeline, the model, and the
+        dashboard that makes the result usable — currently applied to Formula&nbsp;1 performance analytics
+        and building-energy monitoring.
+      </p>
+      <div class="hero-cta">
+        <a href="#work" class="btn btn-primary">View the work</a>
+        <a href="https://github.com/DevDharmik" class="btn btn-ghost">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-frame" id="photo-frame">
+        <img src="profile.jpg" alt="Dharmik Champaneri" onerror="document.getElementById('photo-frame').classList.add('broken')">
+        <div class="photo-fallback" aria-hidden="true">D</div>
+      </div>
+      <div class="photo-meta">
+        <span class="live">● Open to work</span>
+        <span>Berlin, DE</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="timing-strip">
+    <div class="timing-cell">
+      <div class="timing-label">PitWall · Test R²</div>
+      <div class="timing-val up">0.976</div>
+    </div>
+    <div class="timing-cell">
+      <div class="timing-label">Podium Model · AUC-ROC</div>
+      <div class="timing-val up">0.928</div>
+    </div>
+    <div class="timing-cell">
+      <div class="timing-label">Smart Building · Records</div>
+      <div class="timing-val">4.9<span class="unit">M</span></div>
+    </div>
+    <div class="timing-cell">
+      <div class="timing-label">Sentiment · F1-score</div>
+      <div class="timing-val">91<span class="unit">%</span></div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="sec-head"><span class="sec-tag">01</span><h2 class="sec-title">Selected Work</h2></div>
+    <p class="sec-desc">Four projects spanning motorsport analytics, IoT anomaly detection, ETL pipelines, and NLP — each one built end-to-end, from raw data to a dashboard someone can actually use.</p>
+
+    <div class="work-grid">
+      <div class="card">
+        <span class="card-tag">CAPSTONE · MOTORSPORT ANALYTICS</span>
+        <h3>PitWall Intelligence</h3>
+        <p>A stakeholder-facing dashboard that turns 11 seasons of F1 telemetry (2014–2024, 112 constructor-seasons) into a two-dimensional Brand Value Index — Performance (60%) plus Consistency (40%) — for a sponsorship market worth roughly $1.8B a year that's still priced mostly on perception.</p>
+        <p class="card-detail">The finding that held up across every sprint: qualifying gap-to-pole correlates with end-of-season points at r ≈ −0.79. The BVI tracks the official standings (Spearman ρ ≈ 0.72) but isn't a copy of them — 2018 Williams finished 10th on points but ranked 3rd on the index, and McLaren's 2024 resurgence scored 85.6/100, which the model caught before the headlines did.</p>
+        <div class="card-stats">
+          <div><span class="k">Test R²</span><span class="v">0.976</span></div>
+          <div><span class="k">AUC-ROC</span><span class="v">0.928</span></div>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/DevDharmik/Pitwall-intelligence">Code ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag">RESEARCH · IOT ANOMALY DETECTION</span>
+        <h3>Smart Building Energy Anomaly Detection</h3>
+        <p>A consensus anomaly pipeline (Z-score, IQR, Isolation Forest — flagged when 2 of 3 agree) with an LLM layer (Groq Llama 3.3 70B) that turns each flag into a plain-language explanation a facilities manager can act on, not a raw score.</p>
+        <p class="card-detail">Runs across two structurally different datasets — ASHRAE GEPIII's aggregated hourly meters and the University of Sharjah's high-frequency multi-sensor IoT feed — toggled live in the same dashboard. Making the ingestion logic dataset-agnostic rather than hardcoded to one schema was the actual engineering problem here, not the anomaly detection itself.</p>
+        <div class="card-stats">
+          <div><span class="k">Records</span><span class="v">~4.9M</span></div>
+          <div><span class="k">Buildings</span><span class="v">565+</span></div>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/DevDharmik">Code ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag">NLP · SENTIMENT ANALYSIS</span>
+        <h3>YouTube Comment Sentiment Analysis</h3>
+        <p>A 2023 undergrad paper claimed 91% F1-score for an SVM sentiment classifier — without saying on what test set, against what baseline, or where it breaks. Rebuilt from scratch to answer that honestly: 4 models running in parallel (3 classical TF-IDF baselines + a RoBERTa transformer fine-tuned on 124M tweets) on live comments pulled from any YouTube video.</p>
+        <p class="card-detail">Classical models trained on movie-review data break on YouTube comments — the dashboard surfaces that domain mismatch instead of hiding it. The transformer wins on accuracy; the classical models still give exact token-level attribution the transformer can't match without approximation.</p>
+        <div class="card-stats">
+          <div><span class="k">Original F1</span><span class="v">91%</span></div>
+          <div><span class="k">Models</span><span class="v">4</span></div>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/DevDharmik/Sentiment_Analysis">Code ↗</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="card-tag">DATA ENGINEERING · ETL</span>
+        <h3>Spotify ETL Pipeline</h3>
+        <p>End-to-end extraction, transformation, and load of 89K+ Spotify tracks into PostgreSQL via Python, pandas, and SQLAlchemy — built to practice production-style pipeline hygiene: logging, retries, and idempotent loads, not just a one-off notebook run.</p>
+        <div class="card-stats">
+          <div><span class="k">Tracks</span><span class="v">89K+</span></div>
+          <div><span class="k">Stage</span><span class="v">E→T→L</span></div>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/DevDharmik/Spotify-ETL-Project">Code ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-grid" style="grid-template-columns:1fr;">
+      <div class="card">
+        <span class="card-tag">DASHBOARD · PUBLIC DATA</span>
+        <h3>World Bank Development Indicators Analysis</h3>
+        <p>An interactive dashboard for exploring global development indicators — built to make macro-level datasets legible at a glance for a non-technical reader, rather than buried in a spreadsheet.</p>
+        <div class="card-links">
+          <a href="https://github.com/DevDharmik/World-Bank-Development-Indicators-Analysis">Code ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="sec-head"><span class="sec-tag">02</span><h2 class="sec-title">Stack</h2></div>
+    <p class="sec-desc">The tools behind the work above.</p>
+    <div class="stack">
+      <div class="stack-col">
+        <h4>Languages &amp; Querying</h4>
+        <ul>
+          <li>Python <span>primary</span></li>
+          <li>SQL <span>querying</span></li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>Analysis &amp; Modeling</h4>
+        <ul>
+          <li>Scikit-learn <span>classical ML</span></li>
+          <li>TensorFlow / Keras <span>deep learning</span></li>
+          <li>SHAP <span>explainability</span></li>
+        </ul>
+      </div>
+      <div class="stack-col">
+        <h4>BI &amp; Delivery</h4>
+        <ul>
+          <li>Power BI <span>reporting</span></li>
+          <li>Tableau <span>dashboards</span></li>
+          <li>Streamlit <span>internal tools</span></li>
+          <li>REST APIs <span>serving</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head"><span class="sec-tag">03</span><h2 class="sec-title">Experience &amp; Education</h2></div>
+    <p class="sec-desc">Hands-on operational work alongside the academic track — the kind of real-world constraint that shapes what a "good" model actually needs to do.</p>
+
+    <div class="exp-card">
+      <div class="exp-when">
+        Berlin, DE
+        <div class="status"><span class="dot" style="animation:none;"></span> Current role</div>
+      </div>
+      <div class="exp-body">
+        <h3>Bicycle Delivery Courier</h3>
+        <div class="exp-org">Closer Go GmbH · Lichterfelde / Steglitz-Zehlendorf, Berlin</div>
+        <ul>
+          <li>Operate as a fully socially-insured employee, having moved up from a Werkstudent contract.</li>
+          <li>Complete OHS training covering adverse-weather protocols, traffic safety, StVO (German road traffic law) compliance, bicycle maintenance, and mobile-device-use restrictions.</li>
+          <li>Deliver under real-time operational constraints — routing, weather, and time pressure — the same "does it hold up under real conditions" bar applied to the analytics work above.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="edu-cert-grid">
+      <div class="edu-cert-col">
+        <h4>Education</h4>
+        <div class="edu-item">
+          <div class="deg">M.Sc. Data Science</div>
+          <div class="inst">University of Europe for Applied Sciences (UE), Potsdam · Mar 2025 – Feb 2027 (expected)</div>
+        </div>
+        <div class="edu-item">
+          <div class="deg">B.E., Computer Engineering (Hons. Data Science)</div>
+          <div class="inst">University of Mumbai</div>
+        </div>
+      </div>
+      <div class="edu-cert-col">
+        <h4>Certifications &amp; Programs</h4>
+        <div class="cert-item"><span>McKinsey Forward Program</span><span class="badge">Complete</span></div>
+        <div class="cert-item"><span>Google Analytics 4 (GA4)</span><span class="badge">In progress</span></div>
+        <div class="cert-item"><span>Forage Job Simulation — BCG X</span><span class="badge">Complete</span></div>
+        <div class="cert-item"><span>Forage Job Simulation — Accenture</span><span class="badge">Complete</span></div>
+        <div class="cert-item"><span>Forage Job Simulation — Tata Group</span><span class="badge">Complete</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div>
+      <p><strong>Currently:</strong> M.Sc. Data Science candidate at the University of Europe for Applied Sciences (UE Potsdam), building on a Computer Engineering foundation from Mumbai.</p>
+      <p>My work keeps returning to the same question — does this hold up outside the notebook, in front of someone who isn't a data person? That's shaped a habit of pairing every model with a way to explain it: a dashboard, a SHAP chart, or an LLM translating an anomaly score into plain language.</p>
+    </div>
+    <div>
+      <p>Before data science, hands-on logistics work at Closer&nbsp;Go GmbH gave me a working sense of real-world operational constraints — the kind that don't show up in clean datasets, but shape what a "good" model or report actually needs to do.</p>
+      <p>Currently looking for Data Analyst, BI, and working student roles in Germany where that combination — rigorous analysis plus a bias toward things that actually ship — is useful.</p>
+      <p class="aside">Currently learning German (A1) alongside the above.</p>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <h2>Let's talk data.</h2>
+    <div class="contact-links">
+      <a href="mailto:dharmikchampaneri@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/dharmikchampaneri/">LinkedIn</a>
+      <a href="https://github.com/DevDharmik">GitHub</a>
+    </div>
+    <div class="foot-meta">
+      <span>© 2026 Dharmik Champaneri — Berlin, DE</span>
+      <span>Built with Python, stubbornness, and one too many R² checks</span>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+  // ---- Mobile nav toggle ----
+  const toggle = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // ---- Telemetry data-stream background ----
+  const canvas = document.getElementById('bg-canvas');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion && window.THREE) {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 40;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Particle field representing scattered data points
+    const count = 260;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 120;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 80;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 60 - 20;
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const mat = new THREE.PointsMaterial({ color: 0xf2b134, size: 0.55, transparent: true, opacity: 0.55 });
+    const points = new THREE.Points(geo, mat);
+    scene.add(points);
+
+    // A single connecting "telemetry trace" line sweeping through the field
+    const traceCount = 40;
+    const tracePositions = new Float32Array(traceCount * 3);
+    for (let i = 0; i < traceCount; i++) {
+      const t = i / traceCount;
+      tracePositions[i * 3] = (t - 0.5) * 140;
+      tracePositions[i * 3 + 1] = Math.sin(t * Math.PI * 3) * 14;
+      tracePositions[i * 3 + 2] = -10;
+    }
+    const traceGeo = new THREE.BufferGeometry();
+    traceGeo.setAttribute('position', new THREE.BufferAttribute(tracePositions, 3));
+    const traceMat = new THREE.LineBasicMaterial({ color: 0x3ddc97, transparent: true, opacity: 0.35 });
+    const traceLine = new THREE.Line(traceGeo, traceMat);
+    scene.add(traceLine);
+
+    let mouseX = 0, mouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 6;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 6;
+    });
+
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+      points.rotation.y = t * 0.015;
+      points.rotation.x = t * 0.008;
+      traceLine.rotation.y = Math.sin(t * 0.1) * 0.1;
+      camera.position.x += (mouseX - camera.position.x) * 0.02;
+      camera.position.y += (-mouseY - camera.position.y) * 0.02;
+      camera.lookAt(scene.position);
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  } else {
+    canvas.style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
